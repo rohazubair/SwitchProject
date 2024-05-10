@@ -1,0 +1,73 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="8dp">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        tools:ignore="MissingConstraints" />
+
+    <!-- ImageView to display the image -->
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/toolbar"
+        android:src="@drawable/logo"
+        android:scaleType="centerCrop" />
+
+    <!-- TextView to display the title -->
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageView"
+        android:layout_marginTop="16dp"
+        android:text="Title"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <!-- TextView to display the description -->
+    <TextView
+        android:id="@+id/textViewDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewTitle"
+        android:layout_marginTop="8dp"
+        android:text="Description"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/buttonPlayAudio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewDescription"
+        android:layout_marginTop="16dp"
+        android:text="Play Audio" />
+
+    <!-- Media controller for playback controls -->
+    <MediaController
+        android:id="@+id/mediaController"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/buttonPlayAudio"
+        android:layout_marginTop="16dp"
+        android:visibility="gone" />
+
+</RelativeLayout>
+</ScrollView>

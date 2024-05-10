@@ -1,6 +1,7 @@
 package com.example.smdfinalproject;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,29 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ViewHo
                 .placeholder(R.drawable.placeholder_image) // Placeholder image while loading
                 .error(R.drawable.error_image) // Error image if unable to load
                 .into(holder.imageViewArticleImage);
+
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get the item associated with the clicked position
+                Articles item = articlesList.get(position);
+
+                // Create an Intent to start ItemDetailsActivity
+                Intent intent = new Intent(context, ActivityDetails.class);
+
+                // Pass the item details as extras to the Intent
+                intent.putExtra("itemTitle", item.getTitle());
+                intent.putExtra("itemDescription", item.getData());
+                intent.putExtra("itemImage", item.getImage());
+                intent.putExtra("itemAudio", item.getAudio());
+                // Add more extras as needed
+
+                // Start the new activity
+                context.startActivity(intent);
+            }
+        });
+
+
     }
 
     @Override
@@ -54,6 +78,8 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ViewHo
 
         TextView title, detail;
         ImageView imageViewArticleImage;
+
+
         CardView cardView;
 
         public ViewHolder(@NonNull View itemView) {
