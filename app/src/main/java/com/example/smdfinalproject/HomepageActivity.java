@@ -25,12 +25,15 @@ public class HomepageActivity extends AppCompatActivity {
     private ArticlesAdapter articlesAdapter;
     private List<Articles> articlesList;
     private FirebaseFirestore db;
+    private static final String TAG = "HomepageActivity";
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.articles_recyclerview);
+
+        db = FirebaseFirestore.getInstance();
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
@@ -48,26 +51,30 @@ public class HomepageActivity extends AppCompatActivity {
 //        articlesAdapter.notifyDataSetChanged();
 
 
-//        db = FirebaseFirestore.getInstance();
-//        CollectionReference articlesRef = db.collection("articles");
-//        articlesRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                if (task.isSuccessful()) {
-//                    articlesList = new ArrayList<>();
-//                    for (DocumentSnapshot document : task.getResult()) {
-//                        Articles article = document.toObject(Articles.class);
-//                        articlesList.add(article);
-//                    }
-//                    articlesAdapter = new ArticlesAdapter(HomepageActivity.this, articlesList);
-//                    recyclerView.setAdapter(articlesAdapter);
-//                    articlesAdapter.notifyDataSetChanged();
-//                } else {
-//                    Log.d("TAG", "Error getting documents: ", task.getException());
-//                }
-//
-//            }
-//        });
+
+        CollectionReference articlesRef = db.collection("Articles");
+        articlesRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    articlesList = new ArrayList<>();
+                    for (DocumentSnapshot document : task.getResult()) {
+                        String Title = document.getString("Title");
+                        String Data = document.getString("Data");
+                        String image = document.getString("image");
+                        String audio = document.getString("audio");
+
+                        Articles article = new Articles(Title, Data, image, audio);
+                        articlesList.add(article);
+                    }
+                    articlesAdapter = new ArticlesAdapter(HomepageActivity.this, articlesList);
+                    recyclerView.setAdapter(articlesAdapter);
+                    articlesAdapter.notifyDataSetChanged();
+                } else {
+                    Log.d(TAG, "Error getting documents: ", task.getException());
+                }
+            }
+        });
 
     }
 

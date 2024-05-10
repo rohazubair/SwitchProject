@@ -4,8 +4,8 @@ import android.graphics.drawable.Drawable;
 
 public class Articles {
 
-    private String title;
-    private String detail;
+    private String Title;
+    private String Data;
 
     private String audio;
     private String image;
@@ -13,31 +13,31 @@ public class Articles {
     public Articles(){
     }
 
-    public Articles(String title, String detail, String img, String audio) {
-        this.title = title;
-        this.detail = detail;
-        this.image = img;
+    public Articles(String Title, String Data, String image, String audio) {
+        this.Title = Title;
+        this.Data = Data;
+        this.image = image;
         this.audio = audio;
     }
 
     public String getTitle() {
-        return title;
+        return Title;
     }
 
-    public void setTitle(String title) {
-        this.title= title;
+    public void setTitle(String Title) {
+        this.Title= Title;
     }
 
-    public String getdetail() {
-        return detail;
+    public String getData() {
+        return Data;
     }
 
     public String getAudio() {
         return audio;
     }
 
-    public void setDetail(String detail) {
-        this.detail = detail;
+    public void setData(String Data) {
+        this.Data = Data;
     }
 
     public String getImage() {
