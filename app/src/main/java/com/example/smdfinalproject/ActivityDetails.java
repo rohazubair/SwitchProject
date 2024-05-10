@@ -24,11 +24,7 @@ import com.squareup.picasso.Picasso;
 
 public class ActivityDetails extends AppCompatActivity {
 
-    MediaPlayer mediaPlayer;
-    MediaController mediaController;
-    Button playAudioButton;
-    Intent intent = getIntent();
-    String itemAudio = intent.getStringExtra("itemAudio");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,13 +66,13 @@ public class ActivityDetails extends AppCompatActivity {
 
 
         // Initialize play audio button
-        playAudioButton = findViewById(R.id.buttonPlayAudio);
-        playAudioButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               // playAudio();
-            }
-        });
+//        playAudioButton = findViewById(R.id.buttonPlayAudio);
+//        playAudioButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//               // playAudio();
+//            }
+//        });
 
     }
 
