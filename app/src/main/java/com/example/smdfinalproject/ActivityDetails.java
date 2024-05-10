@@ -25,6 +25,9 @@ import com.squareup.picasso.Picasso;
 public class ActivityDetails extends AppCompatActivity {
 
 
+    MediaPlayer mediaPlayer;
+    MediaController mediaController;
+    Button playAudioButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,24 +58,24 @@ public class ActivityDetails extends AppCompatActivity {
         itemDescriptionTextView.setText(itemDescription);
         Picasso.get().load(itemImage).into(itemImageView);
 
-//        mediaPlayer = new MediaPlayer();
-//        mediaPlayer.setAudioAttributes(new AudioAttributes.Builder()
-//                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-//                .setUsage(AudioAttributes.USAGE_MEDIA)
-//                .build());
-//
-//        // Initialize MediaController
-//        mediaController = new MediaController(this);
+        mediaPlayer = new MediaPlayer();
+        mediaPlayer.setAudioAttributes(new AudioAttributes.Builder()
+                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                .setUsage(AudioAttributes.USAGE_MEDIA)
+                .build());
+
+        // Initialize MediaController
+        mediaController = new MediaController(this);
 
 
         // Initialize play audio button
-//        playAudioButton = findViewById(R.id.buttonPlayAudio);
-//        playAudioButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//               // playAudio();
-//            }
-//        });
+        playAudioButton = findViewById(R.id.buttonPlayAudio);
+        playAudioButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                playAudio(itemAudio);
+            }
+        });
 
     }
 
@@ -93,28 +96,29 @@ public class ActivityDetails extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-//    private void playAudio() {
-//        try {
-//            mediaPlayer.reset();
-//            mediaPlayer.setDataSource(itemAudio);
-//            mediaPlayer.prepareAsync();
-//            mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-//                @Override
-//                public void onPrepared(MediaPlayer mp) {
-//                    mediaPlayer.start();
-//                    mediaController.show();
-//                }
-//            });
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-//    @Override
-//    protected void onDestroy() {
-//        super.onDestroy();
-//        if (mediaPlayer != null) {
-//            mediaPlayer.release();
-//            mediaPlayer = null;
-//        }
-//    }
+    private void playAudio(String itemAudio) {
+        try {
+            mediaPlayer.reset();
+            mediaPlayer.setDataSource(itemAudio);
+            mediaPlayer.prepareAsync();
+            mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+                    mediaPlayer.start();
+                    mediaController.show();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+    }
 }
