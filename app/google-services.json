@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "783629025344",
+    "firebase_url": "https://se-smd-default-rtdb.firebaseio.com",
+    "project_id": "se-smd",
+    "storage_bucket": "se-smd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:783629025344:android:a1688652baa9a5f2671fa5",
+        "android_client_info": {
+          "package_name": "com.example.smdfinalproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBY8lXNQ3zz8DZ3hjkwNt00pL0tz8R5HTI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
