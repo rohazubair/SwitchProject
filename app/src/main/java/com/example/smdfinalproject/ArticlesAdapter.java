@@ -36,7 +36,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ViewHo
         Articles article = articlesList.get(position);
 
         holder.title.setText(article.getTitle());
-        holder.detail.setText(article.getdetail());
+        holder.detail.setText(article.getData());
         // Load and display image using Picasso
         Picasso.get()
                 .load(article.getImage()) // Assuming getImage() returns the image URL
