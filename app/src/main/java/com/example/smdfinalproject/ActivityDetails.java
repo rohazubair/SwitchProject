@@ -5,13 +5,16 @@ import android.content.Intent;
 import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.MediaController;
+import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,18 +27,19 @@ import com.squareup.picasso.Picasso;
 
 public class ActivityDetails extends AppCompatActivity {
 
-
+    ImageView PlayPause;
+    TextView CurrTime, TotalTime;
+    SeekBar PlayerBar;
     MediaPlayer mediaPlayer;
-    MediaController mediaController;
+    Handler handler = new Handler();
+
     Button playAudioButton;
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
-        MediaPlayer mediaPlayer;
-        MediaController mediaController;
-        Button playAudioButton;
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -43,6 +47,7 @@ public class ActivityDetails extends AppCompatActivity {
         // Enable the back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        //Receive Data From Adapter
         Intent intent = getIntent();
         String itemTitle = intent.getStringExtra("itemTitle");
         String itemDescription = intent.getStringExtra("itemDescription");
@@ -52,8 +57,14 @@ public class ActivityDetails extends AppCompatActivity {
         TextView itemTitleTextView = findViewById(R.id.textViewTitle);
         TextView itemDescriptionTextView = findViewById(R.id.textViewDescription);
         ImageView itemImageView = findViewById(R.id.imageView);
+        PlayPause = findViewById(R.id.playPause);
+        CurrTime = findViewById(R.id.currentTime);
+        TotalTime = findViewById(R.id.TotalDuration);
+        PlayerBar = findViewById(R.id.playerSeekBar);
+        PlayerBar.setMax(100);
 
 
+        //Set data into XML components from adapter
         itemTitleTextView.setText(itemTitle);
         itemDescriptionTextView.setText(itemDescription);
         Picasso.get().load(itemImage).into(itemImageView);
@@ -64,18 +75,32 @@ public class ActivityDetails extends AppCompatActivity {
                 .setUsage(AudioAttributes.USAGE_MEDIA)
                 .build());
 
-        // Initialize MediaController
-        mediaController = new MediaController(this);
+
+
 
 
         // Initialize play audio button
-        playAudioButton = findViewById(R.id.buttonPlayAudio);
-        playAudioButton.setOnClickListener(new View.OnClickListener() {
+        PlayPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                playAudio(itemAudio);
+
+                if(mediaPlayer.isPlaying())
+                {
+                    handler.removeCallbacks(updater);
+                    mediaPlayer.pause();
+                    PlayPause.setImageResource(R.drawable.baseline_play_circle_filled_24);
+                }
+                else{
+                    Toast.makeText(ActivityDetails.this, "Button is pressed.", Toast.LENGTH_SHORT).show();
+                    playAudio(itemAudio);
+                    PlayPause.setImageResource(R.drawable.baseline_adjust_24);
+                }
+
+
+
             }
         });
+        handler.postDelayed(updater, 1000);
 
     }
 
@@ -96,22 +121,28 @@ public class ActivityDetails extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void playAudio(String itemAudio) {
+
+
+    private void playAudio(String itemAudioUrl) {
+
         try {
             mediaPlayer.reset();
-            mediaPlayer.setDataSource(itemAudio);
+            mediaPlayer.setDataSource(itemAudioUrl);
             mediaPlayer.prepareAsync();
             mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
-                    mediaPlayer.start();
-                    mediaController.show();
+                    mp.start();
+                    // Set the total duration text view
+                    TotalTime.setText(milliSecondsToTimer(mediaPlayer.getDuration()));
                 }
             });
         } catch (Exception e) {
             e.printStackTrace();
+            Toast.makeText(ActivityDetails.this, "Error playing audio", Toast.LENGTH_SHORT).show();
         }
     }
+
 
     @Override
     protected void onDestroy() {
@@ -121,4 +152,49 @@ public class ActivityDetails extends AppCompatActivity {
             mediaPlayer = null;
         }
     }
+
+    private Runnable updater = new Runnable() {
+        @Override
+        public void run() {
+            updateSeekBar();
+            long CurrentDuration = mediaPlayer.getCurrentPosition();
+            CurrTime.setText(milliSecondsToTimer(CurrentDuration));
+
+            handler.postDelayed(this, 1000);
+        }
+    };
+
+    private void updateSeekBar()
+    {
+        if(mediaPlayer.isPlaying())
+        {
+            PlayerBar.setProgress((int)(((float)mediaPlayer.getCurrentPosition()/mediaPlayer.getDuration())*100));
+            handler.postDelayed(updater, 1000);
+        }
+    }
+
+
+    private String milliSecondsToTimer(long Milliseconds)
+    {
+        String timerString=" ", secondString;
+        int hours = (int)(Milliseconds/(1000*60*60));
+        int minutes = (int)(Milliseconds%(1000*60*60))/(1000*60);
+        int seconds = (int)((Milliseconds%(1000*60*60))%(1000*60)/1000);
+
+        if (hours>0)
+        {
+            timerString = hours + ":";
+        }
+        if (seconds < 10)
+        {
+            secondString = "0" + seconds;
+        }
+        else
+        {
+            secondString = "" + seconds;
+        }
+        timerString = timerString + minutes + ":" +seconds;
+        return timerString;
+    }
+
 }
