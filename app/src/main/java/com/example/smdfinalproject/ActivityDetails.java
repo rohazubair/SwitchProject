@@ -88,6 +88,7 @@ public class ActivityDetails extends AppCompatActivity {
                 {
                     handler.removeCallbacks(updater);
                     mediaPlayer.pause();
+                    Toast.makeText(ActivityDetails.this, "Paused.", Toast.LENGTH_SHORT).show();
                     PlayPause.setImageResource(R.drawable.baseline_play_circle_filled_24);
                 }
                 else{
