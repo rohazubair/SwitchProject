@@ -16,13 +16,20 @@
         android:theme="@style/Theme.SMDFinalProject"
         tools:targetApi="31">
         <activity
-            android:name=".ActivityDetails"
-            android:parentActivityName=".HomepageActivity"
-            android:label="Articles"
+            android:name=".CoursesActivity"
             android:exported="false" />
         <activity
-            android:name=".HomepageActivity"
+            android:name=".AboutUsActivity"
             android:exported="false" />
+        <activity
+            android:name=".ActivityDetails"
+            android:exported="false"
+            android:label="Articles"
+            android:parentActivityName=".HomepageActivity" />
+        <activity
+            android:name=".HomepageActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".SignUpActivity"
             android:exported="false"

@@ -1,10 +1,12 @@
 package com.example.smdfinalproject;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,12 +21,22 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.view.MenuItem;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
+import com.google.android.material.navigation.NavigationView;
 public class HomepageActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private ArticlesAdapter articlesAdapter;
     private List<Articles> articlesList;
     private FirebaseFirestore db;
+
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
+    private NavigationView navigationView;
     private static final String TAG = "HomepageActivity";
 
     @SuppressLint("MissingInflatedId")
@@ -33,23 +45,44 @@ public class HomepageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.articles_recyclerview);
 
+        drawerLayout = findViewById(R.id.drawer_layout);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
+        navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                // Handling navigation item clicks
+                switch (item.getItemId()) {
+                    case R.id.nav_home:
+                        Intent homeIntent = new Intent(HomepageActivity.this, HomepageActivity.class);
+                        startActivity(homeIntent);
+                        break;
+                    case R.id.nav_AboutUs:
+                        Intent aboutUsIntent = new Intent(HomepageActivity.this, AboutUsActivity.class);
+                        startActivity(aboutUsIntent);
+                        break;
+                    case R.id.nav_Courses:
+                        Intent coursesIntent = new Intent(HomepageActivity.this, CoursesActivity.class);
+                        startActivity(coursesIntent);
+                        break;
+                }
+                return true;
+            }
+        });
+
         db = FirebaseFirestore.getInstance();
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-//        Articles a1 = new Articles();
-//        articlesList = new ArrayList<>();
-//        a1.setTitle("Landmarks Detection and Correction for Pakistan Sign Language (PSL) Recognition");
-//        a1.setDetail("Key Takeaways: The project, Landmarks Detection and Correction for Pakistan Sign Language (PSL) Recognition, stands at the forefront of technological");
-//        a1.setImage("https://github.com/rohazubair/Switch/blob/b84bfb72a5752cbb493ab5181870f7b3626316cb/article1img.jpg?raw=true");
-//        a1.setAudio("");
-//        articlesList.add(a1);
-//        articlesAdapter = new ArticlesAdapter(HomepageActivity.this, articlesList);
-//        recyclerView.setAdapter(articlesAdapter);
-//        articlesAdapter.notifyDataSetChanged();
-
 
 
         CollectionReference articlesRef = db.collection("Articles");
@@ -76,6 +109,14 @@ public class HomepageActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }
