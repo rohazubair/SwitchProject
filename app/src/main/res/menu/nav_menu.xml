@@ -20,14 +20,11 @@
             android:icon="@drawable/courses_icon"
             android:title="COURSES"/>
 
-    </group>
-    <item android:title="">
-        <menu>
-            <item
-                android:id="@+id/nav_logout"
-                android:icon="@drawable/logout_icon"
-                android:title="LOGOUT"/>
+        <item
+            android:id="@+id/nav_feedback"
+            android:icon="@drawable/outline_add_comment_24"
+            android:title="FEEDBACK"/>
 
-        </menu>
-    </item>
+    </group>
+
 </menu>
