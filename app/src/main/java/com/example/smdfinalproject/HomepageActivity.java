@@ -65,11 +65,11 @@ public class HomepageActivity extends AppCompatActivity {
                         Intent homeIntent = new Intent(HomepageActivity.this, HomepageActivity.class);
                         startActivity(homeIntent);
                         break;
-                    case R.id.nav_AboutUs:
+                    case R.id.nav_about_us:
                         Intent aboutUsIntent = new Intent(HomepageActivity.this, AboutUsActivity.class);
                         startActivity(aboutUsIntent);
                         break;
-                    case R.id.nav_Courses:
+                    case R.id.nav_courses:
                         Intent coursesIntent = new Intent(HomepageActivity.this, CoursesActivity.class);
                         startActivity(coursesIntent);
                         break;
