@@ -3,7 +3,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:padding="16dp"
-        android:background="#CFCFC4"
+        android:background="#E0CFCFCF"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -11,8 +11,8 @@
             android:id="@+id/card_view"
             android:layout_width="match_parent"
             android:layout_height="500dp"
-            android:backgroundTint="#ffffff"
-            android:background="#CFCFC4"
+            android:backgroundTint="#FAF9F6"
+            android:background="#FAF9F6"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -24,6 +24,8 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:padding="16dp"
                 android:layout_width="match_parent"
+                android:background="#f9f9f9"
+                android:backgroundTint="#f9f9f9"
                 android:layout_height="match_parent">
 
                 <ImageView
@@ -47,6 +49,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     android:textSize="24sp"
                     android:textStyle="bold"
+                    android:background="#f9f9f9"
+                    android:backgroundTint="#f9f9f9"
                     android:textColor="#37003c"
                     android:layout_marginBottom="16dp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -58,6 +62,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
+                    android:background="#f9f9f9"
+                    android:backgroundTint="#f9f9f9"
                     android:text="I'm a subhead"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -69,6 +75,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
+                    android:background="#f9f9f9"
+                    android:backgroundTint="#f9f9f9"
                     android:text="I'm a supporting text. Very Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

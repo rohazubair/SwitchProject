@@ -73,6 +73,10 @@ public class HomepageActivity extends AppCompatActivity {
                         Intent coursesIntent = new Intent(HomepageActivity.this, CoursesActivity.class);
                         startActivity(coursesIntent);
                         break;
+                    case R.id.nav_feedback:
+                        Intent feedbackIntent = new Intent(HomepageActivity.this, FeedbackActivity.class);
+                        startActivity(feedbackIntent);
+                        break;
                 }
                 return true;
             }
