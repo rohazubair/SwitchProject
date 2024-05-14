@@ -16,11 +16,25 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         tools:ignore="MissingConstraints" />
 
+    <TextView
+        android:id="@+id/TextViewFeeedback"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="10dp"
+        android:text="Give Us Your Feedback"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:layout_marginTop="80dp"/>
+
     <EditText
         android:id="@+id/editTextEmailAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="130dp"
         android:layout_marginBottom="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
