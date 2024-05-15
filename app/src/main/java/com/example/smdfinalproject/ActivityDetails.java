@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.SeekBar;
@@ -23,7 +24,14 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 import com.squareup.picasso.Picasso;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ActivityDetails extends AppCompatActivity {
 
@@ -33,8 +41,13 @@ public class ActivityDetails extends AppCompatActivity {
     MediaPlayer mediaPlayer;
     Handler handler = new Handler();
 
+    private ImageButton btnFavorite;
+    private String articleTitle; // Assume this is passed when starting the activity
+    private String userId;
+    private DocumentReference userDocRef;
+
     Button playAudioButton;
-    @SuppressLint("MissingInflatedId")
+    @SuppressLint({"MissingInflatedId", "WrongViewCast"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,8 +90,6 @@ public class ActivityDetails extends AppCompatActivity {
 
 
 
-
-
         // Initialize play audio button
         PlayPause.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +114,29 @@ public class ActivityDetails extends AppCompatActivity {
         });
         handler.postDelayed(updater, 1000);
 
+        // Initialize Firebase Auth
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        userId = auth.getCurrentUser().getUid();
+
+        // Initialize Firestore
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        userDocRef = db.collection("users").document(userId);
+
+        // Initialize UI elements
+        btnFavorite = findViewById(R.id.imageStarButton);
+
+        // Get the article title (assuming it's passed via intent)
+       // articleTitle = getIntent().getStringExtra("itemTitle");
+
+        // Set click listener for the favorite button
+        btnFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addFavorite(itemTitle);
+            }
+        });
+
+
     }
 
 
@@ -124,16 +158,35 @@ public class ActivityDetails extends AppCompatActivity {
 
 
 
+    private void addFavorite(String title) {
+        // Use Firestore's merge feature to add the favorite field without overwriting existing data
+        Map<String, Object> favoriteMap = new HashMap<>();
+        favoriteMap.put(title, true);
+
+        Map<String, Object> favorites = new HashMap<>();
+        favorites.put("favorites", favoriteMap);
+
+        userDocRef.set(favorites, SetOptions.merge()).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Toast.makeText(ActivityDetails.this, "Added to favorites", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(ActivityDetails.this, "Failed to add to favorites", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void playAudio(String itemAudioUrl) {
 
         try {
             mediaPlayer.reset();
             mediaPlayer.setDataSource(itemAudioUrl);
             mediaPlayer.prepareAsync();
+
             mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
                     mp.start();
+                    Toast.makeText(ActivityDetails.this, "Audio will play shortly", Toast.LENGTH_SHORT).show();
                     // Set the total duration text view
                     TotalTime.setText(milliSecondsToTimer(mediaPlayer.getDuration()));
                 }

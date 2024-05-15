@@ -25,10 +25,11 @@
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="300dp"
-            android:layout_centerHorizontal="true"
+
             android:layout_below="@id/toolbar"
             android:src="@drawable/logo"
             android:scaleType="centerCrop" />
+        <!--android:layout_Horizontal="true"-->
 
         <!-- TextView to display the title -->
         <TextView
@@ -43,7 +44,20 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <!-- TextView to display the description -->
+
+        <ImageButton
+
+            android:id="@+id/imageStarButton"
+            android:layout_width="50dp"
+            android:layout_height="60dp"
+            android:layout_below="@id/textViewTitle"
+            android:layout_marginStart="110dp"
+            android:layout_marginTop="48dp"
+            android:layout_toEndOf="@id/playPause"
+            android:contentDescription="Enter Your favorites"
+            app:srcCompat="@android:drawable/btn_star_big_on" />
+
+
         <ImageView
             android:id="@+id/playPause"
             android:layout_width="50dp"
@@ -51,7 +65,7 @@
             android:layout_centerHorizontal="true"
             android:layout_below="@id/textViewTitle"
             android:src="@drawable/baseline_play_circle_filled_24"
-            android:layout_marginTop="8dp"></ImageView>
+            android:layout_marginTop="56dp"></ImageView>
 
         <LinearLayout
             android:id="@+id/ProgressLayout"
@@ -97,6 +111,8 @@
             android:layout_margin="8dp"
             android:text="Description"
             android:textSize="14sp" />
+
+
 
     </RelativeLayout>
 </ScrollView>
