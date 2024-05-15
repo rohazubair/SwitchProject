@@ -30,6 +30,11 @@
             android:icon="@drawable/outline_add_comment_24"
             android:title="FEEDBACK"/>
 
+        <item
+            android:id="@+id/nav_signOut"
+            android:icon="@drawable/back_button_icon"
+            android:title="SIGN OUT"/>
+
     </group>
 
 </menu>

@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -29,6 +30,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -92,6 +94,10 @@ public class HomepageActivity extends AppCompatActivity {
                         Intent feedbackIntent = new Intent(HomepageActivity.this, FeedbackActivity.class);
                         startActivity(feedbackIntent);
                         break;
+                    case R.id.nav_signOut:
+                        signOut();
+                        return true;
+
                 }
                 return true;
             }
@@ -204,6 +210,17 @@ public class HomepageActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    private void signOut() {
+        FirebaseAuth.getInstance().signOut();
+        Toast.makeText(HomepageActivity.this, "Signed out successfully", Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(HomepageActivity.this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+    }
+
 
 //    @Override
 //    public boolean onOptionsItemSelected(MenuItem item) {
