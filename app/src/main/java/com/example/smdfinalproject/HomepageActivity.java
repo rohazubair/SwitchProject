@@ -84,6 +84,10 @@ public class HomepageActivity extends AppCompatActivity {
                         Intent coursesIntent = new Intent(HomepageActivity.this, CoursesActivity.class);
                         startActivity(coursesIntent);
                         break;
+                    case R.id.nav_favourites:
+                        Intent favouritesIntent = new Intent(HomepageActivity.this, FavoritesActivity.class);
+                        startActivity(favouritesIntent);
+                        break;
                     case R.id.nav_feedback:
                         Intent feedbackIntent = new Intent(HomepageActivity.this, FeedbackActivity.class);
                         startActivity(feedbackIntent);
